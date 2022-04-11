@@ -1,0 +1,10 @@
+<i class="lang-icon" app-icon="translate"></i>
+
+<app-select-form-control
+    [control]="translation"
+    [hasSearch]="true"
+    [hasEmpty]="true"
+    [items]="translationsDictionary$ | async"
+    [noDivider]="true"
+    [noErrors]="true">
+</app-select-form-control>

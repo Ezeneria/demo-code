@@ -1,0 +1,16 @@
+<app-box-scroll (scrolledUp)="load()">
+    <app-chat-window class="messages"
+                     [trackByFn]="trackByFn"
+                     [messages]="messages$ | async"
+                     [readonly]="readonly"
+                     [thread]="thread"
+                     [loading]="loading"
+                     (changeMessage)="changeMessage($event)"
+                     (chatLoaded)="load()"
+                     [loadMoreVisible]="!(completed$ | async)">
+    </app-chat-window>
+</app-box-scroll>
+
+<app-chat-actions *ngIf="thread && !readonly"
+                  [thread]="thread"
+                  [clearChatInput]="thread.chatId"></app-chat-actions>

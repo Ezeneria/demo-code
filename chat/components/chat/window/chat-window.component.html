@@ -1,0 +1,15 @@
+<ng-container *ngIf="thread">
+    <div *ngIf="loadMoreVisible" class="load-more">
+        <button type="button" [disabled]="loading" (click)="chatLoaded.emit(true)" class="btn btn-primary">
+            <span>{{'COMMON.LOAD_MORE' | translate}}</span>
+        </button>
+    </div>
+
+    <app-chat-message *ngFor="let message of messages; trackBy: trackByFn"
+                      [readonly]="readonly"
+                      [thread]="thread"
+                      (changeMessage)="changeMessage.emit($event)"
+                      [message]="message"></app-chat-message>
+</ng-container>
+
+<ng-content></ng-content>

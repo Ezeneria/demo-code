@@ -1,0 +1,30 @@
+<form [formGroup]="form" (keyup.enter)="submit()" (ngSubmit)="submit()">
+    <app-input-form-control name="location" [heading]="'LOCATION' | translate"></app-input-form-control>
+
+    <app-form-control [errors]="form.get('from').errors"
+                        [required]="true"
+                        [heading]="'COMMON.FROM' | translate">
+        <app-datetime-picker formControlName="from"></app-datetime-picker>
+    </app-form-control>
+
+    <app-form-control [errors]="form.get('to').errors"
+                        [required]="true"
+                        [heading]="'COMMON.TO' | translate">
+        <app-datetime-picker formControlName="to"></app-datetime-picker>
+    </app-form-control>
+
+    <app-checkbox-form-control name="allDay" [noDivider]="true">
+        <span>{{'LIVE_PAGE.ALL_DAY' | translate}}</span>
+    </app-checkbox-form-control>
+
+    <app-select-form-control name="timezone"
+                                [heading]="'TIMEZONE' | translate"
+                                [items]="timezones"></app-select-form-control>
+
+    <app-textarea-form-control name="comment"
+                                [heading]="'LIVE_PAGE.COMMENTS' | translate"
+                                [placeholder]="'LIVE_PAGE.TYPE_YOU_COMMENT_HERE' | translate"></app-textarea-form-control>
+
+    <app-form-footer class="modal-footer" [loading]="loading"></app-form-footer>
+</form>
+

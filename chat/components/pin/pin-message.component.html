@@ -1,0 +1,24 @@
+<div class="desc"
+     [innerHTML]="'LIVE_PAGE.MESSAGE_PIN_DESC' | translate :
+            {action: modal.data.pinMessage.isPinned ? ('LIVE_PAGE.UNPIN' | translate) : ('LIVE_PAGE.PIN' | translate)}">
+</div>
+
+<div class="box-wrapper">
+    <div class="info">
+        <span class="username">@{{modal.data.pinMessage.userName}}</span>
+        <span>{{modal.data.pinMessage.messageTime}}</span>
+    </div>
+
+    <div class="body" [innerHTML]="modal.data.pinMessage.message | appMarkdownToHtml"></div>
+</div>
+
+<div class="modal-footer btn-group flex">
+    <button type="button"
+            autofocus
+            class="btn btn-primary"
+            (click)="pin()">{{'COMMON.SAVE' | translate}}</button>
+
+    <button type="button"
+            class="btn"
+            (click)="modal.close()">{{'COMMON.CANCEL' | translate}}</button>
+</div>

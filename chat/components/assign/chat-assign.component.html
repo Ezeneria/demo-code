@@ -1,0 +1,12 @@
+<form [formGroup]="form" (keyup.enter)="submit()" (ngSubmit)="submit()">
+    <app-select-form-control name="admin"
+                                [hasSearch]="true"
+                                [heading]="'LIVE_PAGE.SELECT_ADMIN' | translate"
+                                [autofocus]="true"
+                                [items]="admins"></app-select-form-control>
+    <app-form-footer
+        class="modal-footer"
+        [loading]="loading"
+        [label]="'COMMON.ASSIGN' | translate">
+    </app-form-footer>
+</form>

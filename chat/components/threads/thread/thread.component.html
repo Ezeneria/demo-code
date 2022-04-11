@@ -1,0 +1,30 @@
+<div class="last-message-line">
+    <div class="last-message-image-wrapper">
+        <ng-content></ng-content>
+        <app-avatar class="user-avatar" [item]="item.angel"></app-avatar>
+    </div>
+
+    <div class="last-message-body">
+        <div class="last-message-inside">
+            <div class="last-message-sender spacer">
+                <div class="text-overflow">{{item.angel.userName}}</div>
+                <i *ngIf="item.hasBankUser" app-icon="balance" class="last-message-account-icon"></i>
+            </div>
+            <div class="last-message-time">{{timeago$ | async}}</div>
+        </div>
+
+        <div class="last-message-inside last-message-info">
+            <div class="accent-text">{{'LIVE_PAGE.WITH' | translate}}&nbsp;</div>
+            <div class="accent text-overflow">{{item.member.userName}}</div>
+
+            <ng-container *ngIf="item.domain">
+                <span class="accent-text">&nbsp;@&nbsp;</span>
+                <app-domain-explicit class="accent-text domain-overflow" [domain]="item.domain"></app-domain-explicit>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<div class="last-message-text"
+     [class.answer]="!item.isMyMessage"
+     [innerHTML]="item.lastMessage | appMarkdownToHtml | appTruncate: 100"></div>

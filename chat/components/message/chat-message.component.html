@@ -1,0 +1,26 @@
+<ng-container [ngSwitch]="message.type">
+    <app-message-text *ngSwitchCase="'text'"
+                      [readonly]="readonly"
+                      [message]="message"
+                      (changeMessage)="changeMessage.emit($event)"
+                      [thread]="thread"></app-message-text>
+
+    <app-message-text *ngSwitchCase="'agentNote'"
+                      [readonly]="readonly"
+                      [message]="message"
+                      (changeMessage)="changeMessage.emit($event)"
+                      [thread]="thread"></app-message-text>
+
+    <app-chat-event *ngSwitchCase="'angelEvent'"
+                    [readonly]="readonly"
+                    [message]="message"
+                    (changeMessage)="changeMessage.emit($event)"
+                    [thread]="thread"></app-chat-event>
+
+    <app-chat-event *ngSwitchCase="'memberEvent'"
+                    [readonly]="readonly"
+                    [message]="message"
+                    (changeMessage)="changeMessage.emit($event)"
+                    [thread]="thread"></app-chat-event>
+    <!--<ng-container *ngSwitchDefault></ng-container>-->
+</ng-container>

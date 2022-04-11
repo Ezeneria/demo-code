@@ -1,0 +1,143 @@
+<div *ngIf="hasDivider" class="actions-row-divider"></div>
+
+<ng-container *ngIf="selectedChatIds.length > 0">
+    <button class="actions-row-item action-item"
+            type="button"
+            #toggleMultiple="appToggle"
+            [appToggle]="tplMultiple"
+            [hasTriangle]="false"
+            [class.active]="toggleMultiple.visible">
+        <i app-icon="done-all"></i>
+    </button>
+
+    <ng-template #tplMultiple>
+        <nav class="selectable-items has-icons">
+            <ng-container *ngIf="isPausedPage">
+                <button *hasAccess="hasAccessManageChats"
+                        type="button"
+                        class="selectable-item"
+                        (click)="unpause(); toggleMultiple.close()">
+                    <i app-icon="unarchive"></i>
+                    {{'ANGEL_ACTION.UNPAUSE_CHATS' | translate}}
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="!isArchivePage">
+                <button *hasAccess="hasAccessManageChats"
+                        type="button"
+                        class="selectable-item"
+                        (click)="archive(); toggleMultiple.close()">
+                    <i app-icon="archive"></i>
+                    {{'ANGEL_ACTION.ARCHIVE_CHATS' | translate}}
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="isArchivePage">
+                <button *hasAccess="hasAccessManageChats"
+                        type="button"
+                        class="selectable-item"
+                        (click)="unarchive(); toggleMultiple.close()">
+                    <i app-icon="unarchive"></i>
+                    {{'ANGEL_ACTION.UNARCHIVE_CHATS' | translate}}
+                </button>
+            </ng-container>
+
+            <button *hasAccess="hasAccessManageChats"
+                    type="button"
+                    class="selectable-item"
+                    (click)="assign(); toggleMultiple.close()">
+                <i app-icon="assign-chats"></i>
+                {{'ANGEL_ACTION.ASSIGN_CHATS' | translate}}
+            </button>
+
+            <button *ngIf="canEndChat"
+                    type="button"
+                    class="selectable-item"
+                    (click)="end(); toggleMultiple.close()">
+                <i app-icon="end-chats"></i>
+                {{'ANGEL_ACTION.END_CHATS' | translate}}
+            </button>
+        </nav>
+    </ng-template>
+</ng-container>
+
+<ng-container *ngIf="selected">
+    <button class="actions-row-item action-item"
+            type="button"
+            #toggleSelected="appToggle"
+            [appTooltip]="!toggleSelected.visible && 'AGENT_TOOLS' | translate"
+            [appToggle]="tplSelected"
+            [hasTriangle]="false"
+            [class.active]="toggleSelected.visible">
+        <i app-icon="build"></i>
+    </button>
+
+    <ng-template #tplSelected>
+        <nav class="selectable-items has-icons">
+            <app-user-actions [user]="member"
+                              [siteId]="selected.siteId"
+                              [angelId]="selected.angel.id"
+                              (action)="toggleSelected.close()"></app-user-actions>
+
+            <!--TODO merge with multiple actions-->
+            <ng-container *ngIf="selectedChatIds.length === 0">
+                <span class="split"></span>
+
+                <ng-container *ngIf="!isArchivePage">
+                    <button *hasAccess="hasAccessManageChats"
+                            type="button"
+                            class="selectable-item"
+                            (click)="archive(true); toggleSelected.close()">
+                        <i app-icon="archive"></i>
+                        {{'ANGEL_ACTION.ARCHIVE_CHAT' | translate}}
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="isPausedPage">
+                    <button *hasAccess="hasAccessManageChats"
+                            type="button"
+                            class="selectable-item"
+                            (click)="unpause(true); toggleSelected.close()">
+                        <i app-icon="unarchive"></i>
+                        {{'ANGEL_ACTION.UNPAUSE_CHAT' | translate}}
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="isArchivePage">
+                    <button *hasAccess="hasAccessManageChats"
+                            type="button"
+                            class="selectable-item"
+                            (click)="unarchive(true); toggleSelected.close()">
+                        <i app-icon="unarchive"></i>
+                        {{'ANGEL_ACTION.UNARCHIVE_CHAT' | translate}}
+                    </button>
+                </ng-container>
+
+                <button *hasAccess="hasAccessManageChats"
+                        type="button"
+                        class="selectable-item"
+                        (click)="assign(true); toggleSelected.close()">
+                    <i app-icon="assign-chats"></i>
+                    {{'ANGEL_ACTION.ASSIGN_CHAT' | translate}}
+                </button>
+
+                <button *ngIf="canEndChat"
+                        type="button"
+                        class="selectable-item"
+                        (click)="end(true); toggleSelected.close()">
+                    <i app-icon="end-chats"></i>
+                    {{'ANGEL_ACTION.END_CHAT' | translate}}
+                </button>
+            </ng-container>
+        </nav>
+    </ng-template>
+</ng-container>
+
+<button *ngIf="selected"
+        type="button"
+        class="actions-row-item action-item"
+        [class.active]="isActive"
+        [appTooltip]="'COMMON.INFO' | translate"
+        (click)="toggle.emit(true)">
+    <i app-icon="user"></i>
+</button>

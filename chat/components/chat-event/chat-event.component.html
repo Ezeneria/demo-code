@@ -1,0 +1,21 @@
+<div class="panes-wrapper panes-wrapper-{{className}}">
+    <div class="panes">
+        <div class="pane-box">
+            <i app-icon="event-note"></i>
+            <div class="pane-text">{{text}}</div>
+        </div>
+        <div *ngIf="location" class="pane-box">
+            <i app-icon="location-on"></i>
+            <div class="pane-text">{{location}}</div>
+        </div>
+        <div class="pane-box">
+            <i app-icon="alarm"></i>
+            <div class="pane-text">{{leftTimeAgo$ | async}}</div>
+        </div>
+    </div>
+</div>
+
+<app-message-text [message]="message"
+                  [thread]="thread"
+                  [readonly]="readonly"
+                  (changeMessage)="changeMessage.emit($event)"></app-message-text>

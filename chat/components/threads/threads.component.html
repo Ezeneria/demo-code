@@ -1,0 +1,28 @@
+<app-loading-line *ngIf="loading$ | async"></app-loading-line>
+
+<p *ngIf="noItems$ | async" class="centering">{{'LIVE_PAGE.NO_THREADS' | translate}}</p>
+
+<a *ngFor="let thread of threads; trackBy: trackByFn"
+   class="last-message"
+   [class.active]="!!selected && thread.chatId === selected.chatId"
+   [routerLink]="[]"
+   [queryParamsHandling]="'merge'"
+   [queryParams]="{chatId: thread.chatId}">
+    <app-thread [thread]="thread">
+        <div class="thread-select" [class.always-visible]="selectedChatIds.length > 0">
+            <app-checkbox-item [value]="selectedChatIds.includes(thread.chatId)"
+                               (click)="$event.stopPropagation()"
+                               (valueChange)="select($event, thread.chatId)"></app-checkbox-item>
+        </div>
+    </app-thread>
+</a>
+
+<div *ngIf="!(completed$ | async)" class="load-more-box">
+    <button type="button"
+            class="btn btn-primary"
+            [disabled]="loading$ | async"
+            (click)="threadLoaded.emit()">
+        <app-loading-line *ngIf="loading$ | async"></app-loading-line>
+        <span>{{'COMMON.LOAD_MORE' | translate}}</span>
+    </button>
+</div>

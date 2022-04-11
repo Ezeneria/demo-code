@@ -1,0 +1,8 @@
+<form [formGroup]="unnasignedForm" class="unnasigned-filter">
+    <app-search class="spacer" name="unassignedChatSearch"></app-search>
+
+    <app-select-form-control name="unassignedChatStatus"
+                             [noErrors]="true"
+                             [noDivider]="true"
+                             [items]="unnasignedPageOptions"></app-select-form-control>
+</form>

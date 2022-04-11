@@ -1,0 +1,69 @@
+<app-loading-line *ngIf="loading"></app-loading-line>
+
+<ng-container *ngIf="!selectedInfo && extended">
+    <div class="heading-box">
+        <h3 class="heading">{{'LIVE_PAGE.ABOUT_THIS_CONVERSATION' | translate}}</h3>
+
+        <div class="spacer"></div>
+
+        <button *ngIf="!isStatic"
+                class="action-item"
+                type="button"
+                [appTooltip]="'COMMON.CLOSE' | translate"
+                (click)="toggle.emit(true)">
+            <i app-icon="close"></i>
+        </button>
+    </div>
+
+    <app-box class="theme2" [heading]="extended.threadUsersHeading">
+        <app-user-represent *ngFor="let user of extended.threadUsers"
+                            class="horizontal"
+                            (click)="selectUser(user)"
+                            [userRepresent]="user"></app-user-represent>
+    </app-box>
+
+    <app-box class="theme2" [heading]="'LIVE_PAGE.CHAT_DETAILS' | translate">
+        <app-def-list class="theme1" [items]="extended.chatDetails"></app-def-list>
+    </app-box>
+
+    <app-pinned-items [items]="extended.pinnedItems"
+                      [readonly]="readonly"></app-pinned-items>
+</ng-container>
+
+<div class="extend-info" *ngIf="selectedInfo">
+    <div class="heading-box">
+        <button style="margin-right: 12px" type="button" class="action-item" (click)="unselectUser()">
+            <i app-icon="arrow-back"></i>
+        </button>
+
+        <h3 class="heading" *ngIf="selectedInfoListAngel">{{'LIVE_PAGE.ANGEL_DETAIL' | translate}}</h3>
+        <h3 class="heading" *ngIf="!selectedInfoListAngel">{{'LIVE_PAGE.MEMBER_DETAIL' | translate}}</h3>
+    </div>
+
+    <app-box [noExpand]="true" [noHeading]="true">
+        <app-user-represent *ngIf="selected" class="vertical" [userRepresent]="selected"></app-user-represent>
+    </app-box>
+
+    <app-box [noExpand]="true" [heading]="'SEXUAL_ACTIVITY.LOOKING_FOR' | translate">
+        <p class="text">{{selectedInfo.looking}}</p>
+    </app-box>
+
+    <app-box [noExpand]="true" [heading]="'USER_EXTENDED_PANEL.INTERESTS' | translate">
+        <div class="tags readonly">
+            <span *ngFor="let interest of selectedInfo.interests"
+                  class="tag text-overflow">{{interest}}</span>
+        </div>
+    </app-box>
+
+    <app-box *ngIf="selectedInfoListAngel" [noExpand]="true" [noHeading]="true">
+        <app-def-list class="theme1" [items]="selectedInfoListAngel"></app-def-list>
+    </app-box>
+
+    <div class="extend-info-footer">
+        <a [href]="selectedInfo.siteProfileUrl | appSafeUrl" target="_blank"
+           class="btn btn-primary btn-cta text-uppercase">
+            <span class="btn-text text-overflow">{{'LIVE_PAGE.VIEW_FULL_PROFILE' | translate}}</span>
+            <i app-icon="open" class="app-icon"></i>
+        </a>
+    </div>
+</div>

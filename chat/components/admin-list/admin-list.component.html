@@ -1,0 +1,13 @@
+<a *ngFor="let admin of admins"
+   class="admin"
+   [class.active]="admin.id === ownerId"
+   [routerLink]="[]"
+   [queryParams]="{adminId: admin.id}">
+    <div class="username">
+        <span>{{admin.userName}}</span>
+        <div *ngIf="admin.online" class="online-status"></div>
+        <div class="total"
+             [appTooltip]="'LIVE_PAGE.TOTAL_CHATS' | translate">({{admin.totalChats | appNumFormatter}})</div>
+    </div>
+    <div class="fullname">{{admin.fullName}}</div>
+</a>

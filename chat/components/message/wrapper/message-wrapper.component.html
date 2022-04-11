@@ -1,0 +1,13 @@
+<div class="message" [class.reverse]="isMyMessage">
+    <app-avatar class="user-avatar bigger" [item]="user"></app-avatar>
+
+    <div class="body body-{{className}}">
+        <div class="inside">
+            <ng-content></ng-content>
+            <div class="time">
+                <span class="sent">{{sentText}}&nbsp;</span>{{timestamp$ | async}}
+                <app-loading *ngIf="isMyMessage && !!message.ownerToken"></app-loading>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<span *ngIf="loading">{{'CHAT.LOADING' | translate}}</span>
+
+<ng-container *ngIf="!loading">
+    <span *ngIf="ready">{{'LIVE_PAGE.CHOOSE_THREAD' | translate}}</span>
+    <span *ngIf="failed">{{'CHAT.FAIL' | translate}}</span>
+</ng-container>

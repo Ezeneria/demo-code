@@ -1,0 +1,17 @@
+<app-box class="theme2" [noDivider]="true" [heading]="'LIVE_PAGE.PINNED_ITEMS' | translate">
+    <div class="action" *ngFor="let pin of items; trackBy: trackByFn">
+        <button *ngIf="!readonly"
+                type="button"
+                class="action-item remove-cta"
+                [appTooltip]="'COMMON.REMOVE' | translate"
+                (click)="unpin(pin)">
+            <i app-icon="close"></i>
+        </button>
+
+        <div class="info">
+            <span class="username">{{pin.userName}}</span>
+            <span class="time">{{pin.messageTimeShort}}</span>
+        </div>
+        <div class="text" [innerHTML]="pin.message | appMarkdownToHtml"></div>
+    </div>
+</app-box>

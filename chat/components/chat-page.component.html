@@ -1,0 +1,68 @@
+<div class="main">
+    <div class="sidebar sidebar-left no-offset" *ngIf="isAdminChatsPage">
+        <app-box-scroll>
+            <app-admin-list class="sidebar-body"
+                            [admins]="admins$ | async"
+                            [ownerId]="currentOwnerId"></app-admin-list>
+        </app-box-scroll>
+    </div>
+
+    <div *ngIf="!isAdminChatsPage || (!!currentOwnerId)" class="sidebar sidebar-left sidebar-large no-offset">
+        <app-unnasigned-criteria *ngIf="hasCriteria"></app-unnasigned-criteria>
+
+        <app-box-scroll class="sidebar-body">
+            <app-threads [threads]="threads$ | async"
+                         [selected]="thread$ | async"
+                         [selectedChatIds]="selectedChatIds$ | async"
+                         (threadLoaded)="loadThreads()"></app-threads>
+        </app-box-scroll>
+    </div>
+
+    <div class="content" [class.readonly]="readonly$ | async">
+        <div class="actions-row">
+            <ng-container *ngIf="thread$ | async as thread">
+                <app-thread-info class="actions-row-item" [thread]="thread"></app-thread-info>
+
+                <div class="spacer"></div>
+
+                <app-chat-change-translation *ngIf="!(loading$ | async)" [thread]="thread"></app-chat-change-translation>
+
+                <app-chat-remaining-time *ngIf="!thread.hasBankUser && thread.sessionFinishTime"
+                                         class="actions-row-item"
+                                         [sessionFinishTime]="thread.sessionFinishTime"></app-chat-remaining-time>
+            </ng-container>
+
+            <div *ngIf="!(thread$ | async)" class="spacer"></div>
+
+            <app-chat-page-actions class="actions-row-menu"
+                                   [selected]="thread$ | async"
+                                   [selectedChatIds]="selectedChatIds$ | async"
+                                   [currentOwnerId]="currentOwnerId"
+                                   [members]="members$ | async"
+                                   [pageType]="pageType"
+                                   [isActive]="isSidebarRightVisible"
+                                   (toggle)="sidebarRightToggle()"></app-chat-page-actions>
+        </div>
+
+        <div class="content-body">
+            <app-loading-line *ngIf="loading$ | async"></app-loading-line>
+
+            <app-chat-status *ngIf="!(thread$ | async)"
+                             class="centering"
+                             [status]="status$ | async"></app-chat-status>
+
+            <app-chat [loading]="loading$ | async"
+                      [readonly]="readonly$ | async"
+                      [thread]="thread$ | async"></app-chat>
+        </div>
+    </div>
+
+    <div *ngIf="(thread$ | async) && isSidebarRightVisible" class="sidebar theme-dark">
+        <app-box-scroll>
+            <app-chat-extended (toggle)="sidebarRightToggle()"
+                               (updateWidget)="updateExtendedScroll($event)"
+                               [extended]="extended$ | async"
+                               [readonly]="readonly$ | async"></app-chat-extended>
+        </app-box-scroll>
+    </div>
+</div>

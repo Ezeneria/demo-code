@@ -1,0 +1,33 @@
+<app-message-wrapper [message]="message" [thread]="thread">
+    <div class="body message-body" [class.pinned]="message.isPinned">
+        <div
+            *ngIf="text"
+            class="markdown message-text"
+            [innerHTML]="text | appMarkdownToHtml"
+            (click)="tryOpenGallery($event)">
+        </div>
+
+        <div
+            *ngIf="thread.translationLanguage && foreignMessage"
+            class="markdown message-text foreign-text"
+            [innerHTML]="foreignMessage | appMarkdownToHtml"
+            (click)="tryOpenGallery($event)">
+        </div>
+
+        <button *ngIf="message.isPinned || ableToPin"
+                type="button"
+                class="action"
+                [disabled]="readonly"
+                (click)="togglePin()">
+            <i app-icon="pin-message"></i>
+        </button>
+
+        <button *ngIf="ableToEdit"
+                type="button"
+                class="action"
+                [disabled]="readonly"
+                (click)="toggleEdit()">
+            <i app-icon="edit"></i>
+        </button>
+    </div>
+</app-message-wrapper>

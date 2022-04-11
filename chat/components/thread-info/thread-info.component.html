@@ -1,0 +1,5 @@
+<span class="username text-overflow">{{thread.angel.userName}}</span>
+<span class="separator">@</span>
+<app-domain-explicit *ngIf="thread.domain"
+                     class="domain-overflow"
+                     [domain]="thread.domain"></app-domain-explicit>

@@ -1,0 +1,103 @@
+<app-images-holder [images]="images"
+                   (removeImage)="removeImage($event)"></app-images-holder>
+
+<div class="chat-actions-wrapper">
+    <app-loading-line *ngIf="loading"></app-loading-line>
+
+    <ng-container *ngIf="!isAdminNoteView">
+        <button type="button"
+                class="chat-action action-item chat-action-general"
+                [appTooltip]="!toggle.visible && 'LIVE_PAGE.ADD_EVENT_AGENT_NOTE' | translate"
+                [hasTriangle]="false"
+                [position]="PositionType.Top"
+                [appToggle]="tplActions"
+                [class.active]="toggle.visible"
+                #toggle="appToggle">
+            <i app-icon="add"></i>
+        </button>
+        <ng-template #tplActions>
+            <nav class="selectable-items has-icons">
+                <button type="button"
+                        class="selectable-item"
+                        (click)="toggleAdminNoteView(); toggle.close()">
+                    <i app-icon="add-note"></i>
+                    {{'AGENT_NOTE.HEADING' | translate}}
+                </button>
+
+                <button type="button"
+                        class="selectable-item"
+                        (click)="onCreateAngelEvent(); toggle.close()">
+                    <i app-icon="date-range"></i>
+                    {{'LIVE_PAGE.ANGEL_EVENT' | translate}}
+                </button>
+
+                <button type="button"
+                        class="selectable-item"
+                        (click)="onCreateMemberEvent(); toggle.close()">
+                    <i app-icon="today"></i>
+                    {{'LIVE_PAGE.MEMBER_EVENT' | translate}}
+                </button>
+            </nav>
+        </ng-template>
+    </ng-container>
+
+    <div *ngIf="isAdminNoteView" class="admin-note">{{'AGENT_NOTE.HEADING' | translate}}</div>
+
+    <div class="chat-input-wrapper" (click)="inputEl.focus()">
+        <textarea
+            #inputEl
+            class="input spacer"
+            rows="1"
+            maxlength="1000"
+            autosize
+            [formControl]="chatInput"
+            (keydown.enter)="trySendOrTranslate($event)">
+        </textarea>
+    </div>
+
+    <ng-container *ngIf="thread.translationLanguage && !isAdminNoteView">
+        <button
+            type="button"
+            [disabled]="chatInput.invalid || loading"
+            (click)="translate()">
+            <i class="translate-icon" app-icon="translate"></i>
+        </button>
+
+        <div class="chat-input-wrapper">
+            <textarea
+                class="input spacer"
+                rows="1"
+                maxlength="1000"
+                autosize
+                [formControl]="translation"
+                (keydown.enter)="enter($event)">
+            </textarea>
+        </div>
+    </ng-container>
+
+    <button
+        type="button"
+        class="chat-action action-item"
+        (click)="trySend()">
+        <i class="translate-icon" app-icon="send"></i>
+    </button>
+
+    <button *ngIf="isAdminNoteView"
+            class="chat-action action-item"
+            type="button"
+            (click)="toggleAdminNoteView()">
+        <i app-icon="close" class="icon-close"></i>
+    </button>
+
+    <ng-container *ngIf="!isAdminNoteView">
+        <button class="chat-action action-item"
+                type="button"
+                [appTooltip]="'SELECT_FILES' | translate"
+                [position]="PositionType.Top"
+                (click)="openFileExplorer()">
+            <i app-icon="add-photo"></i>
+        </button>
+
+        <app-emoji-list [hasTriangle]="false" (addEmoji)="addEmoji($event)"></app-emoji-list>
+    </ng-container>
+</div>

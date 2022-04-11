@@ -1,0 +1,12 @@
+<form class="thread-criteria-form" [formGroup]="form">
+    <app-select-item class="topmenu-select"
+                     [control]="form.get('sort') | appTypeAs : FormControl"
+                     [items]="options"
+                     [hasOverlap]="false"
+                     (valueChange)="send()"></app-select-item>
+
+    <app-domain-select [control]="typeaheadControl"
+                       [placeholder]="'DOMAIN' | translate"
+                       [items]="domains"
+                       (domainSelect)="send()"></app-domain-select>
+</form>
